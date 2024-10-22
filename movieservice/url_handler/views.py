@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 
+
 def get_url(request):
     playerUrl = request.GET.get('playerUrl')
     movie = request.GET.get('movie')
