@@ -1,11 +1,22 @@
-{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="ru"><html>
+
 <head>
-    <title>{% block title %}Template{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="ДГИ" />
+    <meta
+        name="description"
+        content="Смотрелка необходима для того, чтобы спокойно смотреть фильмы." />
+
+        <title>{% block title %}Template{% endblock %}</title>
+    {% load static %}
+
+    {% block css %}{% endblock %}
+    <link rel="shortcut icon" href="{% static 'images/logo2.png' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'images/logo2.png' %}"> <!-- 32×32 -->
     <link rel="stylesheet" type="text/css" href="{% static 'base_s2.css' %}">
 </head>
+
 <body>
     <header>
         <h1>Смотрелка</h1>
@@ -21,7 +32,7 @@
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>ООО "НИИ Ху Ясебе"</p>
+        <p>Департамент городского имущества города Москвы</p>
     </footer>
 </body>
 </html>

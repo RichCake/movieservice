@@ -5,7 +5,7 @@ body {
 }
 
 header {
-    background: #76885b url(/images/logo2.png) right no-repeat;
+    background: #76885b url(images/logo2.png) right no-repeat;
     color: #dddddd;
     padding: 20px;
 }
