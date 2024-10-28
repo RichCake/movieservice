@@ -22,7 +22,7 @@ const backgroundElement = document.getElementById('background');
  * @param {object} data The movie data
  * @param {string} [scriptVersion] The version of the script
  */
-async function init(data, scriptVersion) {
+async function init(data, scriptVersion = false) {
 	try {
 		if (initialized) return;
 		initialized = true;

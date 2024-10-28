@@ -1,10 +1,11 @@
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
+@csrf_exempt
 def get_url(request):
-    playerUrl = request.GET.get('playerUrl')
-    movie = request.GET.get('movie')
-    movie_id = request.GET.get('id')
-    # Печатаем параметры для отладки
-    print(f"Player URL: {playerUrl}, Movie: {movie}, ID: {movie_id}")
+    if request.method == "POST":
+        post_data = json.loads(request.body)
+
     return redirect("homepage:home")
