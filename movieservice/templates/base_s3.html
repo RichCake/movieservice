@@ -4,16 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="ДГИ" />
-    <meta
-        name="description"
-        content="Смотрелка необходима для того, чтобы спокойно смотреть фильмы." />
+    {% block meta %}{% endblock %}
 
-        <title>{% block title %}Template{% endblock %}</title>
+    <title>{% block title %}Template{% endblock %}</title>
     {% load static %}
 
     {% block css %}{% endblock %}
-    <link rel="shortcut icon" href="{% static 'images/logo2.png' %}" type="image/x-icon" />
-    <link rel="icon" href="{% static 'images/logo2.png' %}"> <!-- 32×32 -->
+    <link rel="shortcut icon" href="{% static 'images/logo2.png' %}" type="image/x-icon" /> <!-- Иконка в избранном-->
+    <link rel="icon" href="{% static 'images/logo2.png' %}"> <!-- 32×32 --> <!-- Иконка сверху -->
+
     <link rel="stylesheet" type="text/css" href="{% static 'base_s2.css' %}">
 </head>
 
@@ -32,7 +31,7 @@
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>Департамент городского имущества города Москвы</p>
+        <p>Практиканты Департамента городского имущества города Москвы</p>
     </footer>
 </body>
 </html>
