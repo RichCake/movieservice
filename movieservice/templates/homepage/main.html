@@ -1,23 +1,25 @@
 {% extends 'base_s3.html' %}
 
-
+<!-- Загрузка стиля -->
 {% block css %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
 {% endblock %}
-<head>
+<!-- блок метаданных -->
+{% block meta %}
+    <meta
+        name="description"
+        content="Смотрелка необходима для того, чтобы спокойно смотреть фильмы." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}
+{% endblock %}
+
+<!-- Название страницы-->
+{% block title %}
     Главная страница
-    {% endblock %}
+{% endblock %}
 
-    <!-- Подключаем main.css -->
-     {% block style %}{% endblock %}
-</head>
-<body>
-
+<!-- блок контенента -->
     {% block content %}
-    <main>
         <!-- Левый блок: история просмотров и ссылка на профиль -->
         <div class="sidebar">
             <h2>История просмотров</h2>
@@ -38,7 +40,4 @@
                 Посмотреть текущий фильм
             </a>
         </div>
-    </main>
     {% endblock %}
-
-</body>
