@@ -1,11 +1,18 @@
+import json
+
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
-import json
+from django.contrib.auth.decorators import login_required
+
+from .models import History
+
 
 
 @csrf_exempt
-def get_url(request):
+@login_required
+def add_movie(request):
     if request.method == "POST":
         post_data = json.loads(request.body)
+        History.objects.create(movie_data=post_data, user=request.user)
 
     return redirect("homepage:home")

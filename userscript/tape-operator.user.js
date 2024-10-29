@@ -245,7 +245,7 @@
 		if (!data) return logger.error('Failed to extract movie data');
 
 		await GM.setValue('movie-data', data);
-        let url = "http://127.0.0.1:8000/url/";
+        let url = "http://127.0.0.1:8000/hist/add/";
         const dataSerialized = JSON.stringify(JSON.stringify(data));
         GM_xmlhttpRequest({
             method: 'POST',
