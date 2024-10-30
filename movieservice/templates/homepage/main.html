@@ -1,115 +1,43 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
+{% extends 'base_s3.html' %}
+
+<!-- Загрузка стиля -->
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+{% endblock %}
+<!-- блок метаданных -->
+{% block meta %}
+    <meta
+        name="description"
+        content="Смотрелка необходима для того, чтобы спокойно смотреть фильмы." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    <style>
-        body {
-            display: flex;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+{% endblock %}
 
-        /* Левый блок с историей просмотров */
-        .sidebar {
-            width: 20%;
-            background-color: #f4f4f4;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Выравнивание по верхнему краю */
-        }
+<!-- Название страницы-->
+{% block title %}
+    Главная страница
+{% endblock %}
 
-        h2 {
-            margin-top: 0;
-            font-size: 20px;
-            color: #333;
-        }
-
-        .history {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .history li {
-            margin-bottom: 10px;
-        }
-
-        .history li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .history li a:hover {
-            text-decoration: underline;
-        }
-
-        /* Ссылка на профиль */
-        .profile-link {
-            margin-top: auto; /* Располагает ссылку на профиль внизу */
-            text-align: center;
-        }
-
-        .profile-link a {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .profile-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Основной блок */
-        .content {
-            flex-grow: 1;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .current-movie-button {
-            padding: 15px 30px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            font-size: 20px;
-            border-radius: 5px;
-        }
-
-        .current-movie-button:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Левый блок: история просмотров и ссылка на профиль -->
-    <div class="sidebar">
-        <h2>История просмотров</h2>
-        <ul class="history">
-            <li><a href="#">Фильм 1</a></li>
-            <li><a href="#">Фильм 2</a></li>
-            <li><a href="#">Фильм 3</a></li>
-            <!-- Добавляйте другие фильмы по мере необходимости -->
-        </ul>
-        <div class="profile-link">
-            <a href="#">Профиль</a>
+<!-- блок контенента -->
+    {% block content %}
+        <!-- Левый блок: история просмотров и ссылка на профиль -->
+        <div class="sidebar">
+            <h2>История просмотров</h2>
+            <ul class="history">
+                <li><a href="#">Фильм 1</a></li>
+                <li><a href="#">Фильм 2</a></li>
+                <li><a href="#">Фильм 3</a></li>
+                <!-- Добавляйте другие фильмы по мере необходимости -->
+            </ul>
+            <div class="profile-link">
+                <a href="#">Профиль</a>
+            </div>
         </div>
-    </div>
 
-    <!-- Основной блок: кнопка текущего фильма -->
-    <div class="content">
-        <a href="#" class="current-movie-button">
-            Посмотреть текущий фильм
-        </a>
-    </div>
-
-</body>
-</html>
+        <!-- Основной блок: кнопка текущего фильма -->
+        <div class="content">
+            <a href="#" class="current-movie-button">
+                Посмотреть текущий фильм
+            </a>
+        </div>
+    {% endblock %}

@@ -1,0 +1,54 @@
+name: Django CI
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set up Django environment variables
+      run: |
+        echo "DATABASE_NAME=test_db" >> .env
+        echo "DATABASE_USER=postgres" >> .env
+        echo "DATABASE_PASSWORD=postgres" >> .env
+        echo "DATABASE_HOST=127.0.0.1" >> .env
+        echo "DATABASE_PORT=5432" >> .env
+
+    - name: Run migrations
+      env:
+        DJANGO_SETTINGS_MODULE: movieservice.settings
+      run: |
+        python manage.py migrate
+
+    - name: Run tests
+      env:
+        DJANGO_SETTINGS_MODULE: movieservice.settings
+      run: |
+        python manage.py test
