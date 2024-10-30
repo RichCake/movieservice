@@ -36,6 +36,12 @@
 	// ID of the banner, attached to the page
 	const BANNER_ID = 'tape-operator-banner';
 
+    // ПОМЕНЯТЬ ПОТОМ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	const MYSITE = 'http://127.0.0.1:8000/';
+    const check_auth_url = MYSITE + 'hist/auth/';
+    const send_data_url = MYSITE + 'hist/add/';
+    const auth_url = MYSITE + 'admin/login/'
+
 	// URL Matchers
 	const KINOPOISK_MATCHER = /kinopoisk\.ru\/(film|series)\/.*/;
 	const IMDB_MATCHER = /imdb\.com\/title\/tt\.*/;
@@ -236,6 +242,21 @@
         return cookieValue;
     }
 
+    async function isUserAuthorized() {
+        const response = await GM.xmlHttpRequest({ method: 'GET', url: check_auth_url });
+        return JSON.parse(response.responseText).is_auth;
+    }
+
+    function sendMovieData(data) {
+        const dataSerialized = JSON.stringify(JSON.stringify(data));
+        GM.xmlHttpRequest({
+            method: 'POST',
+            url: send_data_url,
+            headers: { 'Content-Type': 'application/json' },
+            data: dataSerialized
+        });
+        logger.info('Sent data:', dataSerialized);
+    }
 	/**
 	 * Open player with the extracted data
 	 * @param {boolean} loadInBackground If true, page will be opened in background
@@ -245,21 +266,29 @@
 		if (!data) return logger.error('Failed to extract movie data');
 
 		await GM.setValue('movie-data', data);
-        let url = "http://127.0.0.1:8000/hist/add/";
-        const dataSerialized = JSON.stringify(JSON.stringify(data));
-        GM_xmlhttpRequest({
-            method: 'POST',
-            url: url,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: dataSerialized
-        });
 
-        logger.info('Ser data: ', dataSerialized);
+        const r = await GM.xmlHttpRequest({ url: check_auth_url });
+        const is_auth = JSON.parse(r.responseText).is_auth
+        logger.info('Is auth: ', is_auth);
+        if (!is_auth) {
+            GM.openInTab(auth_url, false);
+
+            let attempts = 0;
+            const maxAttempts = 100;
+
+            while (!await isUserAuthorized() && attempts < maxAttempts) {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                attempts++;
+            }
+            if (attempts >= maxAttempts) {
+                return logger.error('Authorization timed out. Please try again.');
+            }
+        }
+
+        sendMovieData(data);
 
 		logger.info('Opening player for movie', data);
-		GM.openInTab(PLAYER_URL, loadInBackground);
+		//GM.openInTab(PLAYER_URL, loadInBackground);
 	}
 
 	/**
