@@ -1,0 +1,80 @@
+main {
+    display: flex;
+    flex-direction: row;
+    min-height: calc(100vh - 100px); /* Рассчитываем высоту с учетом футера */
+}
+
+/* Левый блок с историей просмотров */
+.sidebar {
+    width: 20%;
+    background-color: #dddddd;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Выравнивание по верхнему краю */
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.history {
+    list-style-type: none;
+    padding: 0;
+}
+
+.history li {
+    margin-bottom: 10px;
+}
+
+.history li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.history li a:hover {
+    text-decoration: underline;
+}
+
+/* Ссылка на профиль */
+.profile-link {
+    margin-top: auto; /* Располагает ссылку на профиль внизу */
+    text-align: center;
+}
+
+.profile-link a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.profile-link a:hover {
+    text-decoration: underline;
+}
+
+/* Основной блок */
+.content {
+    flex-grow: 1;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.current-movie-button {
+    padding: 15px 30px;
+    background-color: #45885b;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.current-movie-button:hover {
+    background-color: #50785d;
+}

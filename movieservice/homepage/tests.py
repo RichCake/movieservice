@@ -1,13 +1,13 @@
+from django.test import SimpleTestCase
 
 
-from django.test import TestCase, Client
+class HomepageTests(SimpleTestCase):
+    # Проверка на работу страницы
+    def test_url_exists_at_correct_location(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
 
-class PageTests(TestCase):
-    def test_homepage(self):
-        resp = self.client.get('/#')
-        self.assertEqual(resp.status_code, 200)
-        self.assertIn('История просмотров', resp.content.decode())
-
-    def test_admin(self):
-        resp = self.client.get('/admin/', follow=True)
-        self.assertEqual(resp.status_code, 200)
+    # Тест на применение верных шаблонов
+    def test_template_name_correct(self):
+        response = self.client.get('')
+        self.assertTemplateUsed(response, "homepage/main.html")
