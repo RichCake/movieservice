@@ -44,7 +44,14 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about/">About</a></li>
-                <li><a href="/auth/">Auth</a></li>
+                <li>{% if user.is_authenticated %}
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <a href="#" onclick="parentNode.submit();">Log Out</a>
+                    </form>
+                    {% else %}
+                        <a href="/accounts/login">Auth</a></li>
+                    {% endif %}
             </ul>
         </nav>
     </header>
