@@ -45,10 +45,10 @@ jobs:
       env:
         DJANGO_SETTINGS_MODULE: movieservice.settings
       run: |
-        python manage.py migrate
+        python movieservice\manage.py migrate
 
     - name: Run tests
       env:
         DJANGO_SETTINGS_MODULE: movieservice.settings
       run: |
-        python manage.py test
+        python movieservice\manage.py test
