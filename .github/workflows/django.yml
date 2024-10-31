@@ -49,11 +49,13 @@ jobs:
         DJANGO_SETTINGS_MODULE: movieservice.settings
         PYTHONPATH: ${{ github.workspace }}/movieservice
       run: |
-        python movieservice/manage.py migrate
+        cd movieservice
+        python manage.py migrate
 
     - name: Run tests
       env:
         DJANGO_SETTINGS_MODULE: movieservice.settings
         PYTHONPATH: ${{ github.workspace }}/movieservice
       run: |
+        cd movieservice
         python movieservice/manage.py test
