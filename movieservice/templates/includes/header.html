@@ -23,7 +23,7 @@
       <a onclick="parentNode.submit();" class="btn btn-outline-primary me-2">Logout</a>
     </form>
       {% else %}
-        <a href="/accounts/login" class="btn btn-outline-primary me-2">Login</a>
+        <a href="/login" class="btn btn-outline-primary me-2">Login</a>
         <a href="{% url 'accounts:signup' %}" class="btn btn-primary">Sign-up</a>
       {% endif %}
   </div>
