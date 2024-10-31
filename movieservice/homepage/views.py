@@ -12,3 +12,7 @@ def homepage_view(request):
     for movie in movies:
         movie.movie_data = json.loads(movie.movie_data)
     return render(request, "homepage/main.html", {"movies": movies})
+
+
+def about_view(request):
+    return render(request, "homepage/about.html", {})
