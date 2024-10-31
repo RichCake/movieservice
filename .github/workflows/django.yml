@@ -46,8 +46,7 @@ jobs:
 
     - name: Run migrations
       env:
-        DJANGO_SETTINGS_MODULE: movieservice.settings
-        PYTHONPATH: ${{ github.workspace }}/movieservice
+        DJANGO_SETTINGS_MODULE: core.settings
       run: |
         cd movieservice
         ls
@@ -55,8 +54,7 @@ jobs:
 
     - name: Run tests
       env:
-        DJANGO_SETTINGS_MODULE: movieservice.settings
-        PYTHONPATH: ${{ github.workspace }}/movieservice
+        DJANGO_SETTINGS_MODULE: core.settings
       run: |
         cd movieservice
         ls
