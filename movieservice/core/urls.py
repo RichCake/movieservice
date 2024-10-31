@@ -16,12 +16,20 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import include, path
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("homepage.urls")),
-    path("url/", include("url_handler.urls")),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path("hist/", include("movie_history.urls")),
+    path("player/", include("player.urls")),
+    path("accounts/", include("accounts.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # path('', include('homepage.urls')),
+    # path('', include('accounts.urls')),

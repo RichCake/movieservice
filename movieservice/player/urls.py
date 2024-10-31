@@ -2,8 +2,8 @@ from django.urls import path
 
 from . import views
 
-app_name = 'url_handler'
+app_name = 'player'
 
 urlpatterns = [
-    path('', views.get_url, name='get'),
+    path('', views.player_view, name='home'),
 ]
