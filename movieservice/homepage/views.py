@@ -1,13 +1,13 @@
 import json
 
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 
 from movie_history.models import History
 
 
-@login_required
 def homepage_view(request):
+    if not request.user.is_authenticated:
+        return redirect("homepage:about")
     movies = History.objects.filter(user=request.user).order_by("-id")
     for movie in movies:
         movie.movie_data = json.loads(movie.movie_data)

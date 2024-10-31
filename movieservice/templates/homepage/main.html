@@ -20,8 +20,11 @@
 {% block content %}
     <!-- Левый блок: история просмотров и ссылка на профиль -->
     <div class="list-group">
+        <h3>История просмотра</h3>
         {% for movie in movies %}
             <a href="{% url 'hist:set' id=movie.id %}" class="list-group-item list-group-item-action">{{ movie.movie_data.title }}</a>
+        {% empty %}
+            <button type="button" class="list-group-item list-group-item-action">Здесь пусто</button>
         {% endfor %}
     </div>
     <!-- Основной блок: кнопка текущего фильма -->

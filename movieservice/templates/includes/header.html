@@ -18,10 +18,13 @@
 
   <div class="col-md-3 text-end">
       {% if request.user.is_authenticated %}
-        <button type="button" class="btn btn-outline-primary me-2">Logout</button>
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <a onclick="parentNode.submit();" class="btn btn-outline-primary me-2">Logout</a>
+    </form>
       {% else %}
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        <a href="/accounts/login" class="btn btn-outline-primary me-2">Login</a>
+        <a href="{% url 'accounts:signup' %}" class="btn btn-primary">Sign-up</a>
       {% endif %}
   </div>
 </header>
