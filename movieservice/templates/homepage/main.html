@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 
 <!-- Загрузка стиля -->
 {% block css %}
-{% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
 {% endblock %}
 <!-- блок метаданных -->
@@ -14,30 +14,20 @@
 {% endblock %}
 
 <!-- Название страницы-->
-{% block title %}
-    Главная страница
-{% endblock %}
+{% block title %}Главная страница{% endblock %}
 
 <!-- блок контенента -->
-    {% block content %}
-        <!-- Левый блок: история просмотров и ссылка на профиль -->
-        <div class="sidebar">
-            <h2>История просмотров</h2>
-            <ul class="history">
-                {% for movie in movies %}
-                <li><a href="{% url 'hist:set' id=movie.id %}">{{ movie.movie_data.title }}</a></li>
-                {% endfor %}
-                <!-- Добавляйте другие фильмы по мере необходимости -->
-            </ul>
-            <div class="profile-link">
-                <a href="#">Профиль</a>
-            </div>
-        </div>
-
-        <!-- Основной блок: кнопка текущего фильма -->
-        <div class="content">
-            <a href="{% url 'hist:last' %}" class="current-movie-button">
-                Посмотреть текущий фильм
-            </a>
-        </div>
-    {% endblock %}
+{% block content %}
+    <!-- Левый блок: история просмотров и ссылка на профиль -->
+    <div class="list-group">
+        {% for movie in movies %}
+            <a href="{% url 'hist:set' id=movie.id %}" class="list-group-item list-group-item-action">{{ movie.movie_data.title }}</a>
+        {% endfor %}
+    </div>
+    <!-- Основной блок: кнопка текущего фильма -->
+    <div class="content">
+        <a href="{% url 'hist:last' %}" class="current-movie-button">
+            Посмотреть текущий фильм
+        </a>
+    </div>
+{% endblock %}
