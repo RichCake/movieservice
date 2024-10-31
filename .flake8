@@ -2,19 +2,16 @@
 
 max-line-length = 88
 
-# Игнорируемые ошибки
 ignore =
-    W291  # Пробел в конце строки
+    W291
 
-# Настройка для поддержки двойных кавычек
 inline-quotes = "
 
-# Настройка сложности кода
 max-complexity = 10
 
-# Исключаем некоторые папки из проверки
 exclude =
     .git,
     __pycache__,
     migrations,
-    .github/workflows
+    .github/workflows,
+    venv/
