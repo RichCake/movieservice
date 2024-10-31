@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "homepage.apps.HomepageConfig",
     "movie_history.apps.MovieHistoryConfig",
     "player.apps.PlayerConfig",
+    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,18 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+LOGIN_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = 'djangocourse@yandex.ru'  # Замените на ваш email
+EMAIL_HOST_PASSWORD = 'bnufhkwcripaunvu'      # Замените на ваш пароль
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
