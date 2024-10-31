@@ -49,6 +49,7 @@ jobs:
         DJANGO_SETTINGS_MODULE: movieservice.settings
         PYTHONPATH: ${{ github.workspace }}/movieservice
       run: |
+        cd movieservice
         ls
         python manage.py migrate
 
