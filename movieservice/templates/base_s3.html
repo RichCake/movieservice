@@ -44,13 +44,18 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about/">About</a></li>
-                <li>{% if user.is_authenticated %}
-                    <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <a href="#" onclick="parentNode.submit();">Log Out</a>
-                    </form>
-                    {% else %}
-                        <a href="/accounts/login">Auth</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'users-profile' %}">My profile</a></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <a href="#" onclick="this.closest('form').submit();">Log Out</a>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="/accounts/login">Auth</a></li>
+                    <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
+
                     {% endif %}
             </ul>
         </nav>

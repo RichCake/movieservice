@@ -29,5 +29,7 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path('login/', auth_views.LoginView.as_view(), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # path('', include('homepage.urls')),
+    # path('', include('accounts.urls')),
