@@ -73,7 +73,9 @@
     <script src="{% static 'player/config.js' %}"></script>
     <script src="{% static 'player/utils.js' %}"></script>
     <script src="{% static 'player/player.js' %}"></script>
+    {% if data %}
     <script>globalThis.init({{ data | safe }});</script>
+    {% endif %}
 </body>
 
 </html>
