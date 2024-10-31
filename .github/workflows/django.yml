@@ -30,6 +30,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        ls
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
@@ -45,7 +46,7 @@ jobs:
       env:
         DJANGO_SETTINGS_MODULE: movieservice.settings
       run: |
-        python movieservice/manage.py migrate
+        python manage.py migrate
 
     - name: Run tests
       env:
