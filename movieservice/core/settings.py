@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-4*jqort7q_g26qz-rbsggspf0xo2(*(fn-79@@4lv-gh%_tflx"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['195.2.73.250', '127.0.0.1']
 
@@ -119,12 +119,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 ## Добавил строчку для пути на статику
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 ##
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = "static/"
-
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
