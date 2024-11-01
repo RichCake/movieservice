@@ -18,7 +18,7 @@
 // @match           *://www.themoviedb.org/tv/*
 // @match           *://letterboxd.com/film/*
 // @match           *://tapeop.dev/*
-// @match           *://127.0.0.1/
+// @match           *://127.0.0.1/player/
 // @connect      127.0.0.1
 // ==/UserScript==
 
