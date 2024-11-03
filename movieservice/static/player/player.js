@@ -24,8 +24,8 @@ const backgroundElement = document.getElementById('background');
  */
 async function init(data, scriptVersion = false) {
 	try {
-		if (initialized) return;
-		initialized = true;
+//		if (initialized) return;
+//		initialized = true;
 
 		// Remove old messages
 		containerElement.querySelectorAll('.message').forEach((element) => element.remove());
@@ -59,7 +59,7 @@ async function init(data, scriptVersion = false) {
 		if (typeof scriptVersion === 'string') checkVersion(scriptVersion);
 
 		// Show background
-		backgroundElement.classList.add('visible');
+		if (typeof backgroundElement !== 'object') backgroundElement.classList.add('visible');
 
 	} catch (error) {
 		initialized = false;

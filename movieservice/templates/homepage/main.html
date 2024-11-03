@@ -3,7 +3,7 @@
 
 <!-- Загрузка стиля -->
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+<link rel="stylesheet" href="{% static 'player/style_min.css' %}">
 {% endblock %}
 <!-- блок метаданных -->
 {% block meta %}
@@ -19,25 +19,63 @@
 <!-- блок контенента -->
 {% block content %}
     <!-- Левый блок: история просмотров и ссылка на профиль -->
-<div class="row">
-    <div class="col-5 list-group">
-        <h3>История просмотра</h3>
-        {% for movie in movies %}
-            <a href="{% url 'hist:set' id=movie.id %}" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <h6 class="col-8 mb-1">{{ movie.movie_data.title }}</h6>
-                    <small class="col-4 text-end">{{ movie.time_since_creation }}</small>
+
+<div class="container">
+    <div class="row">
+        <div class="col-5 list-group">
+            <h3>История просмотра</h3>
+            {% for movie in movies %}
+<!--                <button class="list-group-item list-group-item-action" type="button" onclick="globalThis.init({{ movie.movie_data | safe }});">{{ movie.movie_data.title }}</button>-->
+                <button type="button" onclick="globalThis.init({{ movie.movie_data | safe }});" class="list-group-item list-group-item-action">
+                    <div class="row">
+                        <p class="col-8 mb-1">{{ movie.movie_data.title }}</p>
+                        <small class="col-4 text-end">{{ movie.time_since_creation }}</small>
+                    </div>
+                </button>
+            {% empty %}
+                <button type="button" class="list-group-item list-group-item-action">Здесь пусто</button>
+            {% endfor %}
+        </div>
+        <!-- Основной блок: кнопка текущего фильма -->
+        <div class="col-7 content">
+            {% if movies %}
+                <div id="container">
+                    <div id="player">
+                        <div id="header">
+                            <div id="title"></div>
+                            <div id="logo">
+                                <img src="{% static 'player/assets/logo.svg' %}" alt="Tape Operator Logo">
+                            </div>
+                        </div>
+                        <div id="content">
+                            <img src="{% static 'player/assets/loading.svg' %}" alt="Loading...">
+                        </div>
+                        <div id="sources"></div>
+                        <div id="footer">
+                            <div>
+                                Made with ♥ by <a href="https://github.com/Kirlovon" target="_blank">Kirlovon</a>.
+                                Modified by <a href="https://github.com/RichCake/movieservice" target="_blank">Movieservice Team</a>.
+                            </div>
+                            <div>
+                                <a href="https://github.com/RichCake/movieservice/issues" target="_blank">Bug Report ↗</a>
+                                <span id="version"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </a>
-        {% empty %}
-            <button type="button" class="list-group-item list-group-item-action">Здесь пусто</button>
-        {% endfor %}
-    </div>
-    <!-- Основной блок: кнопка текущего фильма -->
-    <div class="col-7 content">
-        <a href="{% url 'hist:last' %}" class="current-movie-button">
-            Посмотреть текущий фильм
-        </a>
+            {% else %}
+                <h5>Пока нечего смотреть. Переходите на <a href="https://www.kinopoisk.ru/" target="_blank">Kinopoisk</a>!</h5>
+            {% endif %}
+        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'player/config.js' %}"></script>
+    <script src="{% static 'player/utils.js' %}"></script>
+    <script src="{% static 'player/player.js' %}"></script>
+    {% if movies %}
+    <script>globalThis.init({{ movies.first.movie_data | safe }});</script>
+    {% endif %}
 {% endblock %}

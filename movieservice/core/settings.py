@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "homepage.apps.HomepageConfig",
     "movie_history.apps.MovieHistoryConfig",
-    "player.apps.PlayerConfig",
     "accounts.apps.AccountsConfig",
 ]
 

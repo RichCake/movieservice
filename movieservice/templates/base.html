@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="ru"><html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="ДГИ" />
@@ -30,7 +30,6 @@
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="{% static 'images/logo-144.png' %}">
 
-<!--    <link rel="stylesheet" type="text/css" href="{% static 'base_s2.css' %}">-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
       .bi {
@@ -49,15 +48,37 @@
       <symbol id="telegram" viewBox="0 0 16 16">
         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/>
       </symbol>
-    </symbol>
     </svg>
-    <div class="container">
-        {% include "includes/header.html" %}
-        <main>
-            {% block content %}{% endblock %}
-        </main>
-        {% include "includes/footer.html" %}
-    </div>
+    {% include "includes/header.html" %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% include "includes/footer.html" %}
+    <template id="initialization-error-message">
+        <div class="message error">
+            <p>
+                Произошла ошибка во время инициализации плеера. Проверьте консоль разработчика и сообщите об ошибке по <a href="https://github.com/RichCake/movieservice/issues" target="_blank">этой ссылке ↗</a>.
+                Я постараюсь быстро все исправить! 🙂
+            </p>
+        </div>
+    </template>
 
+    <template id="script-error-message">
+        <div class="message error">
+            <p>
+                Похоже что плеер так и не был инициализирован. Проверьте, установлена ли у вас актуальная версия скрипта <a href="https://github.com/RichCake/movieservice">Movieservice ↗</a>.
+            </p>
+        </div>
+    </template>
+
+    <template id="script-outdated-message">
+        <div class="message warning">
+            <p>
+                Похоже, что у вас установлена устаревшая версия скрипта - <b class="script-version"></b>.
+                Рекомендуем обновить скрипт, перейдя по <a href="https://github.com/RichCake/movieservice/issues" target="_blank">этой ссылке ↗</a>.
+            </p>
+        </div>
+    </template>
+{% block scripts %}{% endblock %}
 </body>
 </html>
