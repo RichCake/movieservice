@@ -25,7 +25,7 @@ const backgroundElement = document.getElementById('background');
 async function init(data, scriptVersion = false) {
 	try {
 //		if (initialized) return;
-//		initialized = true;
+		initialized = true;
 
 		// Remove old messages
 		containerElement.querySelectorAll('.message').forEach((element) => element.remove());
