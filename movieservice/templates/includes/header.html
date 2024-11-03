@@ -9,7 +9,9 @@
   </div>
 
   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+  {% if request.user.is_staff %}
     <li><a href="{% url 'homepage:home' %}" class="nav-link px-2 link-secondary">Home</a></li>
+  {% endif %}
     <li><a href="{% url 'homepage:about' %}" class="nav-link px-2">About</a></li>
   {% if request.user.is_staff %}
     <li><a class="nav-link px-2" href="{% url 'admin:index' %}" target="_blank">Админка</a></li>
