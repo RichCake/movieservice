@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "homepage.apps.HomepageConfig",
     "movie_history.apps.MovieHistoryConfig",
     "accounts.apps.AccountsConfig",
+    "player.apps.PlayerConfig",
 ]
 
 MIDDLEWARE = [
