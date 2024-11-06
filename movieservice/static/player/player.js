@@ -286,9 +286,14 @@ function setup() {
 		// Show error if script not initialized after timeout
 		setTimeout(() => {
 			if (initialized) return;
+			init(first_movie_data);
+			logger.info('Try init last from hist');
+		}, 5000);
+		setTimeout(() => {
+			if (initialized) return;
 			showScriptErrorMessage();
 			logger.error('Initialization timeout');
-		}, 5000);
+		}, 10000);
 
 		// Get cached movie key from URL
 		const movieKey = getSearchParam('movie');

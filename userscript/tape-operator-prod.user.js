@@ -37,9 +37,8 @@
 	// ID of the banner, attached to the page
 	const BANNER_ID = 'tape-operator-banner';
 
-    // ПОМЕНЯТЬ ПОТОМ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	const MYSITE = 'http://195.2.73.250/';
-	const PLAYER_URL = MYSITE + 'player/';
+	const PLAYER_URL = MYSITE;
     const check_auth_url = MYSITE + 'hist/auth/';
     const send_data_url = MYSITE + 'hist/add/';
     const auth_url = MYSITE + 'login/'

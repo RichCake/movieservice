@@ -95,6 +95,9 @@
 {% endblock %}
 
 {% block scripts %}
+<script type="text/javascript">
+    const first_movie_data = {{ movies.first.movie_data | safe }};
+</script>
 <script src="{% static 'player/config.js' %}"></script>
 <script src="{% static 'player/utils.js' %}"></script>
 <script src="{% static 'player/player.js' %}"></script>
@@ -102,9 +105,5 @@
     document.getElementById('toggle-history-btn').addEventListener('click', function () {
         document.body.classList.toggle('history-hidden');
     });
-
-    {% if movies %}
-    globalThis.init({{ movies.first.movie_data | safe }});
-    {% endif %}
 </script>
 {% endblock %}

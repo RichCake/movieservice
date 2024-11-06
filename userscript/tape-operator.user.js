@@ -19,7 +19,9 @@
 // @match           *://letterboxd.com/film/*
 // @match           *://tapeop.dev/*
 // @match           *://127.0.0.1/player/
+// @match           *://195.2.73.250/player/
 // @connect      127.0.0.1
+// @connect      195.2.73.250
 // ==/UserScript==
 
 (function () {
@@ -37,7 +39,7 @@
 
     // ПОМЕНЯТЬ ПОТОМ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	const MYSITE = 'http://127.0.0.1:8000/';
-	const PLAYER_URL = MYSITE + 'player/';
+	const PLAYER_URL = MYSITE;
     const check_auth_url = MYSITE + 'hist/auth/';
     const send_data_url = MYSITE + 'hist/add/';
     const auth_url = MYSITE + 'login/'
