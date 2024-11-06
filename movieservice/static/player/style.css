@@ -283,7 +283,7 @@ a:focus {
 	background-size: 352px;
 	background-repeat: repeat;
 	background-position: center;
-	background-image: url(../assets/pattern.webp);
+	background-image: url(../player/assets/pattern.webp);
 	transition: opacity 1s ease, background-size 1s ease;
 	box-shadow: inset 0 0 6rem 6rem var(--color-bg);
 }

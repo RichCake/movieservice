@@ -1,16 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<!-- Загрузка стиля -->
 {% block css %}
 <link rel="stylesheet" href="{% static 'player/style_min.css' %}">
-{% endblock %}
-<!-- блок метаданных -->
-{% block meta %}
-    <meta
-        name="description"
-        content="Смотрелка необходима для того, чтобы спокойно смотреть фильмы." />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    /* Устанавливаем фон за основным контентом */
+    #background {
+        background-image: url("{% static 'player/assets/pattern.webp' %}");
+        background-size: 352px;
+        background-repeat: repeat;
+        background-position: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4;
+        z-index: -1;
+    }
+
+    /* Стили для скрытия и показа боковой панели */
+    #history-panel {
+        transition: all 0.3s ease;
+    }
+    .history-hidden #history-panel {
+        display: none;
+    }
+    .history-hidden .content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 722px;
+    }
+</style>
 {% endblock %}
 
 <!-- Название страницы-->
@@ -18,15 +39,17 @@
 
 <!-- блок контенента -->
 {% block content %}
-    <!-- Левый блок: история просмотров и ссылка на профиль -->
-
+<div id="background"></div>
 <div class="container">
     <div class="row">
-        <div class="col-5 list-group">
+        <div class="col-12 mb-3">
+            <button id="toggle-history-btn" class="btn btn-outline-light"><i class="bi bi-list fs-4"></i></button>
+        </div>
+
+        <div id="history-panel" class="col-5 list-group">
             <h3>История просмотра</h3>
             {% for movie in movies %}
-<!--                <button class="list-group-item list-group-item-action" type="button" onclick="globalThis.init({{ movie.movie_data | safe }});">{{ movie.movie_data.title }}</button>-->
-                <button type="button" onclick="globalThis.init({{ movie.movie_data | safe }});" class="list-group-item list-group-item-action">
+                <button type="button" onclick="globalThis.init({{ movie.movie_data | safe }});" class="list-group-item list-group-item-action bg-dark text-light">
                     <div class="row">
                         <p class="col-8 mb-1">{{ movie.movie_data.title }}</p>
                         <small class="col-4 text-end">{{ movie.time_since_creation }}</small>
@@ -36,8 +59,8 @@
                 <button type="button" class="list-group-item list-group-item-action">Здесь пусто</button>
             {% endfor %}
         </div>
-        <!-- Основной блок: кнопка текущего фильма -->
-        <div class="col-7 content">
+
+        <div class="col content">
             {% if movies %}
                 <div id="container">
                     <div id="player">
@@ -72,10 +95,16 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'player/config.js' %}"></script>
-    <script src="{% static 'player/utils.js' %}"></script>
-    <script src="{% static 'player/player.js' %}"></script>
+<script src="{% static 'player/config.js' %}"></script>
+<script src="{% static 'player/utils.js' %}"></script>
+<script src="{% static 'player/player.js' %}"></script>
+<script>
+    document.getElementById('toggle-history-btn').addEventListener('click', function () {
+        document.body.classList.toggle('history-hidden');
+    });
+
     {% if movies %}
-    <script>globalThis.init({{ movies.first.movie_data | safe }});</script>
+    globalThis.init({{ movies.first.movie_data | safe }});
     {% endif %}
+</script>
 {% endblock %}
