@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("DJANGO_DEBUG") == "True" else False
 
-ALLOWED_HOSTS = ['195.2.73.250', '127.0.0.1']
+ALLOWED_HOSTS = ["195.2.73.250", "127.0.0.1"]
 
 
 # Application definition
@@ -60,7 +60,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -78,11 +78,18 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DATABASE_NAME"),
+
+        "USER": os.getenv("DATABASE_USER"),
+
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+
+        "HOST": os.getenv("DATABASE_HOST"),
+
+        "PORT": os.getenv("DATABASE_PORT"),
     }
 }
 
@@ -125,8 +132,8 @@ USE_TZ = True
 
 ##
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles/")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -135,22 +142,22 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/"
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = 'djangocourse@yandex.ru'  # Заменить на свой email
-EMAIL_HOST_PASSWORD = 'bnufhkwcripaunvu'      # Заменить на свой пароль
+EMAIL_HOST_USER = "djangocourse@yandex.ru"  # Заменить на свой email
+EMAIL_HOST_PASSWORD = "bnufhkwcripaunvu"      # Заменить на свой пароль
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = "/accounts/login/"
 
 
 # Путь к хранению и обслуживанию медиа-файлов. В нашем случае - аватарки
-MEDIA_ROOT = BASE_DIR/'media'
-MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR/"media"
+MEDIA_URL = "/media/"
