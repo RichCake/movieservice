@@ -17,9 +17,8 @@
 // @match           *://www.themoviedb.org/movie/*
 // @match           *://www.themoviedb.org/tv/*
 // @match           *://letterboxd.com/film/*
-// @match           *://tapeop.dev/*
-// @match           *://127.0.0.1/player/
-// @match           *://195.2.73.250/player/
+// @match           *://127.0.0.1/
+// @match           *://195.2.73.250/
 // @connect      127.0.0.1
 // @connect      195.2.73.250
 // ==/UserScript==
@@ -37,12 +36,12 @@
 	// ID of the banner, attached to the page
 	const BANNER_ID = 'tape-operator-banner';
 
-    // ПОМЕНЯТЬ ПОТОМ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // Change to your site url
 	const MYSITE = 'http://127.0.0.1:8000/';
 	const PLAYER_URL = MYSITE;
     const check_auth_url = MYSITE + 'hist/auth/';
     const send_data_url = MYSITE + 'hist/add/';
-    const auth_url = MYSITE + 'login/'
+    const auth_url = MYSITE + 'login/';
 
 	// URL Matchers
 	const KINOPOISK_MATCHER = /kinopoisk\.ru\/(film|series)\/.*/;
