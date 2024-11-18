@@ -162,3 +162,4 @@ cython_debug/
 .idea/
 /movieservice/staticfiles/
 /movieservice/db.sqlite3
+.DS_Store

@@ -42,8 +42,13 @@
 <div id="background"></div>
 <div class="container">
     <div class="row">
-        <div class="col-12 mb-3">
+        <div class="col-12 mb-3 d-flex">
+          <div class="me-auto">
             <button id="toggle-history-btn" class="btn btn-outline-light"><i class="bi bi-list fs-4"></i></button>
+          </div>
+          <form role="search">
+              <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+          </form>
         </div>
 
         <div id="history-panel" class="col-5 list-group">
@@ -98,6 +103,83 @@
 <script src="{% static 'player/utils.js' %}"></script>
 <script src="{% static 'player/player.js' %}"></script>
 <script>
+	const KINOPOISK_MATCHER = /kinopoisk\.ru\/(film|series)\/.*/;
+	const IMDB_MATCHER = /imdb\.com\/title\/tt\.*/;
+	const TMDB_MATCHER = /themoviedb\.org\/(movie|tv)\/\.*/;
+	const LETTERBOXD_MATCHER = /letterboxd\.com\/film\/\.*/;
+	const MATCHERS = [KINOPOISK_MATCHER, IMDB_MATCHER, TMDB_MATCHER, LETTERBOXD_MATCHER];
+  document.querySelector('form[role="search"]').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Остановить стандартное поведение формы
+    const input = e.target.querySelector('input[type="search"]');
+    const url = input.value.trim(); // Получаем URL из поля ввода
+    input.value = ''
+  
+    if (url) {
+      try {
+        const movieData = await extractMovieData(url); // Ждём результата извлечения данных
+        if (movieData) {
+          globalThis.init(movieData); // Передача данных в init
+        } else {
+          alert('Невозможно извлечь данные из указанного URL. Проверьте корректность ссылки.');
+        }
+      } catch (error) {
+        console.error('Ошибка извлечения данных:', error);
+        alert('Произошла ошибка при обработке URL.');
+      }
+    } else {
+      alert('Введите URL для поиска.');
+    }
+  });
+  
+  async function extractMovieData(url) {
+    try {
+      const title = "Movieservice";
+      if (!title) {
+        console.error('Заголовок не найден');
+        return null;
+      }
+  
+      // Проверяем, к какому типу сайта относится URL
+      if (url.match(KINOPOISK_MATCHER)) {
+        const id = url.split('/').at(4);
+        return { kinopoisk: id, title };
+      }
+  
+      if (url.match(IMDB_MATCHER)) {
+        const id = url.split('/').at(4);
+        return { imdb: id, title };
+      }
+  
+      if (url.match(TMDB_MATCHER)) {
+        const id = url.split('/').at(4).split('-').at(0);
+        return { tmdb: id, title };
+      }
+  
+      if (url.match(LETTERBOXD_MATCHER)) {
+        const elements = document.querySelectorAll('a');
+        const elementsArray = Array.from(elements);
+  
+        const imdbLink = elementsArray.find((link) => link?.href?.match(IMDB_MATCHER));
+        if (imdbLink) {
+          const imdbId = imdbLink.href.split('/').at(4);
+          if (imdbId) return { imdb: imdbId, title };
+        }
+  
+        const tmdbLink = elementsArray.find((link) => link?.href?.match(TMDB_MATCHER));
+        if (tmdbLink) {
+          const tmdbId = tmdbLink.href.split('/').at(4)?.split('-')?.at(0);
+          if (tmdbId) return { tmdbId: tmdbId, title };
+        }
+        return null;
+      }
+  
+      return null;
+    } catch (error) {
+      console.error('Ошибка при обработке данных:', error);
+      return null;
+    }
+  }
+
     document.getElementById('toggle-history-btn').addEventListener('click', function () {
         document.body.classList.toggle('history-hidden');
     });
