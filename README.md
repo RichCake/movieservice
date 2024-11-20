@@ -51,7 +51,7 @@
 
 ---
 
-###### Идея и частично скрипт взяты у [**Kirills Reunovs**](https://github.com/Kirlovon/Tape-Operator?tab=readme-ov-file)
+Идея и частично скрипт взяты у [**Kirills Reunovs**](https://github.com/Kirlovon/Tape-Operator?tab=readme-ov-file)
 
 ---
 
