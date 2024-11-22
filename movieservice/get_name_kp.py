@@ -15,10 +15,11 @@ def get_kp_name_by_link(link):
         driver.get(link)
 
         # Ждем выполнения скрипта и перенаправления
-        WebDriverWait(driver, 600).until(EC.visibility_of_element_located((By.TAG_NAME, 'h1'))).click()
+        (WebDriverWait(driver, 600)
+         .until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'h1[itemprop="name"]'))).click())
 
         # Извлекаем заголовок после выполнения перенаправления
-        header = driver.find_element(By.TAG_NAME, 'h1')
+        header = driver.find_element(By.CSS_SELECTOR, 'h1[itemprop="name"]')
         return header.text
     except Exception as e:
         return e
