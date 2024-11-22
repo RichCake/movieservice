@@ -17,8 +17,6 @@
 // @match           *://www.themoviedb.org/movie/*
 // @match           *://www.themoviedb.org/tv/*
 // @match           *://letterboxd.com/film/*
-// @match           *://tapeop.dev/*
-// @match           *://127.0.0.1/
 // @match           *://195.2.73.250/
 // @connect      127.0.0.1
 // @connect      195.2.73.250
