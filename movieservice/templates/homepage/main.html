@@ -108,16 +108,18 @@
 	const TMDB_MATCHER = /themoviedb\.org\/(movie|tv)\/\.*/;
 	const LETTERBOXD_MATCHER = /letterboxd\.com\/film\/\.*/;
 	const MATCHERS = [KINOPOISK_MATCHER, IMDB_MATCHER, TMDB_MATCHER, LETTERBOXD_MATCHER];
+    const send_data_url = '/hist/add/';
   document.querySelector('form[role="search"]').addEventListener('submit', async function (e) {
     e.preventDefault(); // Остановить стандартное поведение формы
     const input = e.target.querySelector('input[type="search"]');
-    const url = input.value.trim(); // Получаем URL из поля ввода
+    const url = input.value.trim();
     input.value = ''
-  
+
     if (url) {
       try {
         const movieData = await extractMovieData(url); // Ждём результата извлечения данных
         if (movieData) {
+          sendMovieData(movieData);
           globalThis.init(movieData); // Передача данных в init
         } else {
           alert('Невозможно извлечь данные из указанного URL. Проверьте корректность ссылки.');
@@ -130,7 +132,40 @@
       alert('Введите URL для поиска.');
     }
   });
-  
+
+  function sendMovieData(data) {
+    const dataSerialized = JSON.stringify(data);
+
+    fetch(send_data_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: dataSerialized
+    });
+  }
+
+  async function fetchTitleKinopoisk(link) {
+    try {
+        const response = await fetch(`/player/get-title?link=${encodeURIComponent(link)}`);
+        if (!response.ok) {
+            throw new Error(`Ошибка HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            return data.title;
+        } else {
+            console.error("Ошибка:", data.error);
+            return null;
+        }
+    } catch (error) {
+        console.error("Ошибка при запросе заголовка:", error);
+        return null;
+    }
+  }
+
   async function extractMovieData(url) {
     try {
       const title = "Movieservice";
@@ -138,12 +173,17 @@
         console.error('Заголовок не найден');
         return null;
       }
-  
+
       // Проверяем, к какому типу сайта относится URL
       if (url.match(KINOPOISK_MATCHER)) {
-        const id = url.split('/').at(4);
-        return { kinopoisk: id, title };
-      }
+            const id = url.split('/').at(4);
+            const kp_title = await fetchTitleKinopoisk(url);
+            if (kp_title) {
+                return { kinopoisk: id, title: kp_title };
+            } else {
+                return { kinopoisk: id, title };
+            }
+        }
   
       if (url.match(IMDB_MATCHER)) {
         const id = url.split('/').at(4);

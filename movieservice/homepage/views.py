@@ -10,7 +10,8 @@ def homepage_view(request):
         return redirect("homepage:about")
     movies = History.objects.filter(user=request.user).order_by("-id")
     for movie in movies:
-        movie.movie_data = json.loads(movie.movie_data)
+        if not isinstance(movie.movie_data, dict):
+            movie.movie_data = json.loads(movie.movie_data)
     return render(request, "homepage/main.html", {"movies": movies})
 
 
