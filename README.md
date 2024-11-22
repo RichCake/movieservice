@@ -32,7 +32,7 @@
 1. Установите расширение [**TamperMonkey**](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo).
 2. Включите [режим разработчика в вашем браузере](https://www.tampermonkey.net/faq.php?locale=ru#Q209).
 3. В меню TamperMonkey нажмите **"Создать новый скрипт"**.
-4. Перенесите файл [`movieservice/userscript/tape-operator-prod.user.js`](https://raw.githubusercontent.com/RichCake/movieservice/refs/heads/dev/userscript/tape-operator-prod.user.js) в открывшееся окно.
+4. Перенесите файл [`movieservice/userscript/tape-operator-prod.user.js`](https://raw.githubusercontent.com/RichCake/movieservice/refs/heads/main/userscript/tape-operator-prod.user.js) в открывшееся окно.
 5. Нажмите **Ctrl+S**, чтобы сохранить.
 
 После этого скрипт активируется, и вы сможете пользоваться **Смотрелкой**.
@@ -115,7 +115,7 @@ cp .env.template .env
 
 ### 3. Настройка скрипта
 
-11. Выполните действия указанные в разделе Установка, но используйте скрипт для локального запуска [`movieservice/userscript/tape-operator.user.js`](https://raw.githubusercontent.com/RichCake/movieservice/refs/heads/dev/userscript/tape-operator.user.js). 
+11. Выполните действия указанные в разделе Установка, но используйте скрипт для локального запуска [`movieservice/userscript/tape-operator.user.js`](https://raw.githubusercontent.com/RichCake/movieservice/refs/heads/main/userscript/tape-operator.user.js). 
 
 ### 4. Запуск сервера
 12. **Команды `python manage.py ...` выполняются из каталога movieservice/movieservice!**
