@@ -161,3 +161,5 @@ LOGIN_URL = "/accounts/login/"
 # Путь к хранению и обслуживанию медиа-файлов. В нашем случае - аватарки
 MEDIA_ROOT = BASE_DIR/"media"
 MEDIA_URL = "/media/"
+
+FAKE_KINOPOISK_API_KEY=os.getenv("FAKE_KINOPOISK_API_KEY")
