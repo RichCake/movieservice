@@ -1,0 +1,104 @@
+<!--
+MIT License
+
+Copyright (c) 2024 Kirills Reunovs
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html>
+{% load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tape Operator</title>
+    <link rel="icon" href="{% static 'player/assets/favicon.png' %}">
+    <link rel="icon" href="{% static 'player/assets/favicon.svg' %}" type="image/svg+xml">
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="{% static 'player/style.css' %}">
+
+</head>
+
+<body>
+    <div id="container">
+
+        <!-- Player window -->
+        <div id="player">
+            <div id="header">
+                <div id="title"></div>
+                <div id="logo">
+                    <img src="{% static 'player/assets/logo.svg' %}" alt="Tape Operator Logo">
+                </div>
+            </div>
+            <div id="content">
+                <img src="{% static 'player/assets/loading.svg' %}" alt="Loading...">
+            </div>
+            <div id="sources"></div>
+            <div id="footer">
+                <div>
+                    Made with ♥ by <a href="https://github.com/Kirlovon" target="_blank">Kirlovon</a>.
+                    Modified by <a href="https://github.com/RichCake/movieservice" target="_blank">Movieservice Team</a>.
+                </div>
+                <div>
+                    <a href="https://github.com/RichCake/movieservice/issues" target="_blank">Bug Report ↗</a>
+                    <span id="version"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background image -->
+    <div id="background"></div>
+
+    <!-- Templates -->
+    <template id="initialization-error-message">
+        <div class="message error">
+            <p>
+                Произошла ошибка во время инициализации плеера. Проверьте консоль разработчика и сообщите об ошибке по <a href="https://github.com/RichCake/movieservice/issues" target="_blank">этой ссылке ↗</a>.
+                Я постараюсь быстро все исправить! 🙂
+            </p>
+        </div>
+    </template>
+
+    <template id="script-error-message">
+        <div class="message error">
+            <p>
+                Похоже что плеер так и не был инициализирован. Проверьте, установлена ли у вас актуальная версия скрипта <a href="https://github.com/RichCake/movieservice">Movieservice ↗</a>.
+            </p>
+        </div>
+    </template>
+
+    <template id="script-outdated-message">
+        <div class="message warning">
+            <p>
+                Похоже, что у вас установлена устаревшая версия скрипта - <b class="script-version"></b>.
+                Рекомендуем обновить скрипт, перейдя по <a href="https://github.com/RichCake/movieservice/issues" target="_blank">этой ссылке ↗</a>.
+            </p>
+        </div>
+    </template>
+
+    <!-- Player code -->
+    <script src="{% static 'player/config.js' %}"></script>
+    <script src="{% static 'player/utils.js' %}"></script>
+    <script src="{% static 'player/player.js' %}"></script>
+    {% if data %}
+    <script>globalThis.init({{ data | safe }});</script>
+    {% endif %}
+</body>
+
+</html>

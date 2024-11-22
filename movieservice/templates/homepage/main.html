@@ -1,115 +1,227 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    <style>
-        body {
-            display: flex;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
+{% load static %}
 
-        /* Левый блок с историей просмотров */
-        .sidebar {
-            width: 20%;
-            background-color: #f4f4f4;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Выравнивание по верхнему краю */
-        }
+{% block css %}
+<link rel="stylesheet" href="{% static 'player/style_min.css' %}">
+<style>
+    /* Устанавливаем фон за основным контентом */
+    #background {
+        background-image: url("{% static 'player/assets/pattern.webp' %}");
+        background-size: 352px;
+        background-repeat: repeat;
+        background-position: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4;
+        z-index: -1;
+    }
 
-        h2 {
-            margin-top: 0;
-            font-size: 20px;
-            color: #333;
-        }
+    /* Стили для скрытия и показа боковой панели */
+    #history-panel {
+        transition: all 0.3s ease;
+    }
+    .history-hidden #history-panel {
+        display: none;
+    }
+    .history-hidden .content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 722px;
+    }
+</style>
+{% endblock %}
 
-        .history {
-            list-style-type: none;
-            padding: 0;
-        }
+<!-- Название страницы-->
+{% block title %}Главная страница{% endblock %}
 
-        .history li {
-            margin-bottom: 10px;
-        }
+<!-- блок контенента -->
+{% block content %}
+<div id="background"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-3 d-flex">
+          <div class="me-auto">
+            <button id="toggle-history-btn" class="btn btn-outline-light"><i class="bi bi-list fs-4"></i></button>
+          </div>
+          <form role="search">
+              <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+          </form>
+        </div>
 
-        .history li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-        }
+        <div id="history-panel" class="col-5 list-group">
+            <h3>История просмотра</h3>
+            {% for movie in movies %}
+                <button type="button" onclick="globalThis.init({{ movie.movie_data | safe }});" class="list-group-item list-group-item-action bg-dark text-light">
+                    <div class="row">
+                        <p class="col-8 mb-1">{{ movie.movie_data.title }}</p>
+                        <small class="col-4 text-end">{{ movie.time_since_creation }}</small>
+                    </div>
+                </button>
+            {% empty %}
+                <button type="button" class="list-group-item list-group-item-action">Здесь пусто</button>
+            {% endfor %}
+        </div>
 
-        .history li a:hover {
-            text-decoration: underline;
-        }
-
-        /* Ссылка на профиль */
-        .profile-link {
-            margin-top: auto; /* Располагает ссылку на профиль внизу */
-            text-align: center;
-        }
-
-        .profile-link a {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .profile-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Основной блок */
-        .content {
-            flex-grow: 1;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .current-movie-button {
-            padding: 15px 30px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            font-size: 20px;
-            border-radius: 5px;
-        }
-
-        .current-movie-button:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Левый блок: история просмотров и ссылка на профиль -->
-    <div class="sidebar">
-        <h2>История просмотров</h2>
-        <ul class="history">
-            <li><a href="#">Фильм 1</a></li>
-            <li><a href="#">Фильм 2</a></li>
-            <li><a href="#">Фильм 3</a></li>
-            <!-- Добавляйте другие фильмы по мере необходимости -->
-        </ul>
-        <div class="profile-link">
-            <a href="#">Профиль</a>
+        <div class="col content">
+                <div id="container">
+                    <div id="player">
+                        <div id="header">
+                            <div id="title"></div>
+                            <div id="logo">
+                                <img src="{% static 'player/assets/logo.svg' %}" alt="Tape Operator Logo">
+                            </div>
+                        </div>
+                        <div id="content">
+                            <img src="{% static 'player/assets/loading.svg' %}" alt="Loading...">
+                        </div>
+                        <div id="sources"></div>
+                        <div id="footer">
+                            <div>
+                                Made with ♥ by <a href="https://github.com/Kirlovon" target="_blank">Kirlovon</a>.
+                                Modified by <a href="https://github.com/RichCake/movieservice" target="_blank">Movieservice Team</a>.
+                            </div>
+                            <div>
+                                <a href="https://github.com/RichCake/movieservice/issues" target="_blank">Bug Report ↗</a>
+                                <span id="version"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
+</div>
+{% endblock %}
 
-    <!-- Основной блок: кнопка текущего фильма -->
-    <div class="content">
-        <a href="#" class="current-movie-button">
-            Посмотреть текущий фильм
-        </a>
-    </div>
+{% block scripts %}
+<script type="text/javascript">
+    const first_movie_data = {{ movies.first.movie_data | safe }};
+</script>
+<script src="{% static 'player/config.js' %}"></script>
+<script src="{% static 'player/utils.js' %}"></script>
+<script src="{% static 'player/player.js' %}"></script>
+<script>
+	const KINOPOISK_MATCHER = /kinopoisk\.ru\/(film|series)\/.*/;
+	const IMDB_MATCHER = /imdb\.com\/title\/tt\.*/;
+	const TMDB_MATCHER = /themoviedb\.org\/(movie|tv)\/\.*/;
+	const LETTERBOXD_MATCHER = /letterboxd\.com\/film\/\.*/;
+	const MATCHERS = [KINOPOISK_MATCHER, IMDB_MATCHER, TMDB_MATCHER, LETTERBOXD_MATCHER];
+    const send_data_url = '/hist/add/';
+  document.querySelector('form[role="search"]').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Остановить стандартное поведение формы
+    const input = e.target.querySelector('input[type="search"]');
+    const url = input.value.trim();
+    input.value = ''
 
-</body>
-</html>
+    if (url) {
+      try {
+        const movieData = await extractMovieData(url); // Ждём результата извлечения данных
+        if (movieData) {
+          sendMovieData(movieData);
+          globalThis.init(movieData); // Передача данных в init
+        } else {
+          alert('Невозможно извлечь данные из указанного URL. Проверьте корректность ссылки.');
+        }
+      } catch (error) {
+        console.error('Ошибка извлечения данных:', error);
+        alert('Произошла ошибка при обработке URL.');
+      }
+    } else {
+      alert('Введите URL для поиска.');
+    }
+  });
+
+  function sendMovieData(data) {
+    const dataSerialized = JSON.stringify(data);
+
+    fetch(send_data_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: dataSerialized
+    });
+  }
+
+  async function fetchTitleKinopoisk(link) {
+    try {
+        const response = await fetch(`/player/get-title?link=${encodeURIComponent(link)}`);
+        if (!response.ok) {
+            throw new Error(`Ошибка HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            return data.title;
+        } else {
+            console.error("Ошибка:", data.error);
+            return null;
+        }
+    } catch (error) {
+        console.error("Ошибка при запросе заголовка:", error);
+        return null;
+    }
+  }
+
+  async function extractMovieData(url) {
+    try {
+      const title = "Movieservice";
+      if (!title) {
+        console.error('Заголовок не найден');
+        return null;
+      }
+
+      // Проверяем, к какому типу сайта относится URL
+      if (url.match(KINOPOISK_MATCHER)) {
+            const id = url.split('/').at(4);
+            const kp_title = await fetchTitleKinopoisk(url);
+            if (kp_title) {
+                return { kinopoisk: id, title: kp_title };
+            } else {
+                return { kinopoisk: id, title };
+            }
+        }
+  
+      if (url.match(IMDB_MATCHER)) {
+        const id = url.split('/').at(4);
+        return { imdb: id, title };
+      }
+  
+      if (url.match(TMDB_MATCHER)) {
+        const id = url.split('/').at(4).split('-').at(0);
+        return { tmdb: id, title };
+      }
+  
+      if (url.match(LETTERBOXD_MATCHER)) {
+        const elements = document.querySelectorAll('a');
+        const elementsArray = Array.from(elements);
+  
+        const imdbLink = elementsArray.find((link) => link?.href?.match(IMDB_MATCHER));
+        if (imdbLink) {
+          const imdbId = imdbLink.href.split('/').at(4);
+          if (imdbId) return { imdb: imdbId, title };
+        }
+  
+        const tmdbLink = elementsArray.find((link) => link?.href?.match(TMDB_MATCHER));
+        if (tmdbLink) {
+          const tmdbId = tmdbLink.href.split('/').at(4)?.split('-')?.at(0);
+          if (tmdbId) return { tmdbId: tmdbId, title };
+        }
+        return null;
+      }
+  
+      return null;
+    } catch (error) {
+      console.error('Ошибка при обработке данных:', error);
+      return null;
+    }
+  }
+
+    document.getElementById('toggle-history-btn').addEventListener('click', function () {
+        document.body.classList.toggle('history-hidden');
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% load static %}
+<div class="container">
+  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <div class="col-md-3 mb-0 mb-md-0">
+      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <h4>СмОтРеЛкА</h4>
+      </a>
+    </div>
+
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    {% if request.user.is_staff %}
+      <li><a href="{% url 'homepage:home' %}" class="nav-link px-2 link-secondary">Home</a></li>
+    {% endif %}
+      <li><a href="{% url 'homepage:about' %}" class="nav-link px-2 text-white">About</a></li>
+    {% if request.user.is_staff %}
+      <li><a class="nav-link px-2 text-white" href="{% url 'admin:index' %}" target="_blank">Админка</a></li>
+    {% endif %}
+    </ul>
+
+    <div class="col-md-3 text-end">
+        {% if request.user.is_authenticated %}
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <a onclick="parentNode.submit();" class="btn btn-outline-light me-2">Logout</a>
+      </form>
+        {% else %}
+          <a href="/login" class="btn btn-outline-light me-2">Login</a>
+          <a href="{% url 'accounts:signup' %}" class="btn btn-light">Sign-up</a>
+        {% endif %}
+    </div>
+  </header>
+</div>

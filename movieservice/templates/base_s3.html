@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru"><html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="ДГИ" />
+    {% block meta %}{% endblock %}
+
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+
+    {% block css %}{% endblock %}
+
+    <!-- Блок Иконок во всех браузерах/приложениях-->
+    <link rel="shortcut icon" href="{% static 'images/logo-32.png' %}" type="image/x-icon" /> <!-- Иконка в избранном -->
+    <link rel="mask-icon" href="{% static 'images/logo.svg' %}" color="#ffffff">
+    <link rel="icon" sizes="48x48" href="{% static 'images/logo-48.png' %}">
+    <link rel="icon" sizes="96x96" href="{% static 'images/logo-96.png' %}">
+    <link rel="icon" sizes="144x144" href="{% static 'images/logo-144.png' %}">
+    <link rel="icon" sizes="192x192" href="{% static 'images/logo-192.png' %}">
+    <link rel="icon" sizes="256x256" href="{% static 'images/logo-256.png' %}">
+    <link rel="icon" sizes="384x384" href="{% static 'images/logo-384.png' %}">
+    <link rel="icon" sizes="512x512" href="{% static 'images/logo-512.png' %}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'images/logo-57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'images/logo-60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'images/logo-72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'images/logo-76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'images/logo-114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'images/logo-120.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'images/logo152-.png' %}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'images/logo-167.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/logo-180.png' %}">
+    <link rel="mask-icon" href="{% static 'images/logo-32.png' %}" color="#000000">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="{% static 'images/logo-144.png' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base_s2.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>Смотрелка</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'users-profile' %}">My profile</a></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <a href="#" onclick="this.closest('form').submit();">Log Out</a>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="/accounts/login">Auth</a></li>
+                    <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
+
+                    {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>Практиканты Департамента городского имущества города Москвы</p>
+    </footer>
+</body>
+</html>
