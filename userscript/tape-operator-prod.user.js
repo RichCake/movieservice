@@ -17,9 +17,10 @@
 // @match           *://www.themoviedb.org/movie/*
 // @match           *://www.themoviedb.org/tv/*
 // @match           *://letterboxd.com/film/*
-// @match           *://195.2.73.250/
+// @match           *://smotrelka.space/*
 // @connect      127.0.0.1
 // @connect      195.2.73.250
+// @connect      smotrelka.space
 // ==/UserScript==
 
 (function () {
@@ -35,7 +36,7 @@
 	// ID of the banner, attached to the page
 	const BANNER_ID = 'tape-operator-banner';
 
-	const MYSITE = 'http://195.2.73.250/';
+	const MYSITE = 'https://smotrelka.space/';
 	const PLAYER_URL = MYSITE;
     const check_auth_url = MYSITE + 'hist/auth/';
     const send_data_url = MYSITE + 'hist/add/';
@@ -287,7 +288,9 @@
         sendMovieData(data);
 
 		logger.info('Opening player for movie', data);
-		GM.openInTab(PLAYER_URL, loadInBackground);
+        if (is_auth) {
+            GM.openInTab(PLAYER_URL, loadInBackground);
+        }
 	}
 
 	/**

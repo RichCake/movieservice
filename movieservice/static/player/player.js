@@ -231,6 +231,11 @@ function showScriptErrorMessage() {
 	containerElement.appendChild(template);
 }
 
+function showPleaseWaitMessage() {
+    const template = document.getElementById('please-waite-message').content.cloneNode(true);
+	containerElement.appendChild(template);
+}
+
 /**
  * Show script outdated message
  * @param {string} scriptVersion The current script version
@@ -285,6 +290,7 @@ function setup() {
 		logger.info('Setup started');
 
 		// Show error if script not initialized after timeout
+		showPleaseWaitMessage();
 		setTimeout(() => {
 			if (initialized) return;
 			init(first_movie_data);

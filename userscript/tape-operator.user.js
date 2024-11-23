@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Tape Operator PROKLADKA
+// @name            Tape Operator PROKLADKA LOCAL
 // @namespace       tape-operator
 // @author          Kirlovon & RichCake
 // @description     Watch movies on IMDB, TMDB, Kinopoisk and Letterboxd!
@@ -289,7 +289,9 @@
         sendMovieData(data);
 
 		logger.info('Opening player for movie', data);
-		GM.openInTab(PLAYER_URL, loadInBackground);
+        if (is_auth) {
+            GM.openInTab(PLAYER_URL, loadInBackground);
+        }
 	}
 
 	/**
