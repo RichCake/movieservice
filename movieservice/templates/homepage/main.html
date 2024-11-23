@@ -50,7 +50,7 @@
               <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
           </form>
         </div>
-
+        {% if movies %}
         <div id="history-panel" class="col-5 list-group">
             <h3>История просмотра</h3>
             {% for movie in movies %}
@@ -91,6 +91,12 @@
                     </div>
                 </div>
         </div>
+        {% else %}
+        <div class="col text-center">
+            <h1 class="display-5 fw-bold lh-1 mb-3 text-body-emphasis">Смотрелка</h1>
+            <p class="lead"><span class="fw-bold">Пусто</span> пока тут. Откройте фильм любой и здесь появится он.</p>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
