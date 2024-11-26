@@ -21,11 +21,11 @@
         {% if request.user.is_authenticated %}
       <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
-        <a onclick="parentNode.submit();" class="btn btn-outline-light me-2">Logout</a>
+        <a onclick="parentNode.submit();" class="btn btn-outline-light me-2">Выйти</a>
       </form>
         {% else %}
-          <a href="/login" class="btn btn-outline-light me-2">Login</a>
-          <a href="{% url 'accounts:signup' %}" class="btn btn-light">Sign-up</a>
+          <a href="/login" class="btn btn-outline-light me-2">Войти</a>
+          <a href="{% url 'accounts:signup' %}" class="btn btn-light">Зарегистрироваться</a>
         {% endif %}
     </div>
   </header>
