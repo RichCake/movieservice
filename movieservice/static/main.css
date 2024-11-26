@@ -78,3 +78,108 @@ h2 {
 .current-movie-button:hover {
     background-color: #50785d;
 }
+
+.login-container {
+    width: 600px;
+    height: 450px;
+    margin: 100px auto;
+    padding: 20px;
+    background: #212529; /* Цвет основного фона */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #ecf0f1;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background: #ecf0f1;
+    color: #34495e;
+}
+
+.login-form input[type="submit"] {
+    background: #007bff; /* Синий цвет Bootstrap */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+}
+
+.login-form input[type="submit"]:hover {
+    background: #0056b3; /* Темно-синий при наведении */
+}
+
+.links a {
+    color: #1abc9c;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+.signup-container {
+    width: 600px;
+    margin: 10px auto;
+    padding: 20px;
+    background: #212529;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-align: center; /* Центровка текста и элементов */
+}
+
+.signup-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #ecf0f1;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column; /* Все элементы формы идут столбцом */
+    align-items: center; /* Центровка всех элементов внутри формы */
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+    width: 100%; /* Инпуты занимают всю ширину контейнера */
+    max-width: 280px; /* Ограничиваем ширину инпутов */
+    margin: 10px 0; /* Пространство между инпутами */
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background: #ecf0f1;
+    color: #34495e;
+}
+
+.signup-form button {
+    margin: 20px 0; /* Пространство сверху и снизу */
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    transition: background 0.3s;
+}
+
+.signup-form button:hover {
+    background: #0056b3;
+}
