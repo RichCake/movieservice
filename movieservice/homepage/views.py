@@ -20,5 +20,9 @@ def homepage_view(request):
         {"movies": movies, "FAKE_KINOPOISK_API_KEY": fake_kinopoisk_api_keq})
 
 
+def policy(request):
+    return render(request, "homepage/policy.html")
+
+
 def about_view(request):
     return render(request, "homepage/about.html", {})
