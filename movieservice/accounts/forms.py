@@ -12,6 +12,11 @@ class SignUpForm(UserCreationForm):
     email = forms.EmailField()
     password1 = forms.CharField(max_length=50, widget=forms.PasswordInput())
     password2 = forms.CharField(max_length=50, widget=forms.PasswordInput())
+    agree_to_terms = forms.BooleanField(
+        required=True,
+        label='Я соглашаюсь с обработкой персональных данных',
+        error_messages={'required': 'Вы должны согласиться с политикой обработки персональных данных.'}
+    )
 
     class Meta:
         model = User

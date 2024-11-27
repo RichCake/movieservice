@@ -134,7 +134,7 @@ h2 {
 }
 
 .signup-container {
-    width: 600px;
+    width: 800px;
     margin: 10px auto;
     padding: 20px;
     background: #212529;
@@ -182,4 +182,51 @@ h2 {
 
 .signup-form button:hover {
     background: #0056b3;
+}
+
+.policy-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #212529; /* Темный фон */
+    color: #ecf0f1; /* Светлый текст */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.policy-container h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #3498db; /* Акцентный цвет */
+}
+
+.policy-content h2 {
+    font-size: 22px;
+    margin-top: 20px;
+    color: #3498db; /* Синий для заголовков */
+}
+
+.policy-content p, .policy-content ul {
+    margin: 10px 0;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.policy-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.policy-content ul li {
+    margin-bottom: 10px;
+}
+
+.policy-content a {
+    color: #1abc9c; /* Цвет ссылок */
+    text-decoration: none;
+}
+
+.policy-content a:hover {
+    text-decoration: underline;
 }

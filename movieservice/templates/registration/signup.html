@@ -17,24 +17,48 @@
         <form method="post" class="signup-form">
     {% csrf_token %}
 
-    <label for="username">Имя пользователя:</label>
-    <input type="text" name="username" id="username">
+    <div>
+        <label for="username">Имя пользователя:</label>
+        {{ form.username }}
+        {{ form.username.errors }}
+    </div>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email">
+    <div>
+        <label for="email">Email:</label>
+        {{ form.email }}
+        {{ form.email.errors }}
+    </div>
 
-    <label for="first_name">Имя:</label>
-    <input type="text" name="first_name" id="first_name">
+    <div>
+        <label for="first_name">Имя:</label>
+        {{ form.first_name }}
+        {{ form.first_name.errors }}
+    </div>
 
-    <label for="last_name">Фамилия:</label>
-    <input type="text" name="last_name" id="last_name">
+    <div>
+        <label for="last_name">Фамилия:</label>
+        {{ form.last_name }}
+        {{ form.last_name.errors }}
+    </div>
 
-    <label for="password1">Пароль:</label>
-    <input type="password" name="password1" id="password1">
+    <div>
+        <label for="password1">Пароль:</label>
+        {{ form.password1 }}
+        {{ form.password1.errors }}
+    </div>
 
-    <label for="password2">Подтвердите пароль:</label>
-    <input type="password" name="password2" id="password2">
+    <div>
+        <label for="password2">Подтвердите пароль:</label>
+        {{ form.password2 }}
+        {{ form.password2.errors }}
+    </div>
 
+    <div class="checkbox-container">
+        <input type="checkbox" name="agree_to_terms" id="agree_to_terms" required>
+        <label for="agree_to_terms">
+            Я соглашаюсь с <a href="{% url 'homepage:privacy' %}" target="_blank">политикой обработки персональных данных</a>
+        </label>
+    </div>
     <button type="submit" class="btn btn-primary btn-lg px-4 me-md-2">Зарегистрироваться</button>
 </form>
 
