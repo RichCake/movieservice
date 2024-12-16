@@ -154,7 +154,7 @@
     async function fetchTitleKinopoisk(link) {
         try {
             // 1. Парсим ссылку и извлекаем ID фильма
-            const match = link.match(/kinopoisk\.ru\/(film|series)\/(\d+)\//);
+            const match = link.match(/kinopoisk\.ru\/film\/(\d+)\//);
             if (!match) {
                 throw new Error('Не удалось извлечь ID фильма из URL');
             }
