@@ -17,15 +17,24 @@ const backgroundElement = document.getElementById('background');
  * @property {string} title
  */
 
+// Set timeout for initialization (5 seconds)
+const initializationTimeoutTimer = setTimeout(() => {
+	showScriptErrorMessage();
+	logger.error('Initialization timeout');
+}, 5000);
+
 /**
  * Initialize player
  * @param {object} data The movie data
  * @param {string} [scriptVersion] The version of the script
  */
-async function init(data, scriptVersion = false) {
+async function init(data, scriptVersion) {
+//	if (initialized) return;
+
 	try {
-//		if (initialized) return;
-		initialized = true;
+
+		// Stop initialization timeout timer
+		clearTimeout(initializationTimeoutTimer);
 
 		// Remove old messages
 		containerElement.querySelectorAll('.message').forEach((element) => element.remove());
@@ -40,7 +49,17 @@ async function init(data, scriptVersion = false) {
 		setSearchParam('movie', key);
 
 		// Get available players sources
-		const sources = await fetchSources(movieData)
+		let sources = [];
+		try {
+			sources = await fetchSources(movieData)
+		} catch (error) {
+			showPlayerText(':(')
+			showServerUnavailableMessage();
+			logger.error('Error fetching data from server', error);
+			return;
+		}
+
+		// Check if server returned any sources
 		if (sources.length === 0) {
 			showPlayerText('Фильм не найден :(');
 			return;
@@ -59,10 +78,12 @@ async function init(data, scriptVersion = false) {
 		if (typeof scriptVersion === 'string') checkVersion(scriptVersion);
 
 		// Show background
-		if (typeof backgroundElement !== 'object') backgroundElement.classList.add('visible');
+		backgroundElement.classList.add('visible');
+
+		// Mark as initialized
+		initialized = true;
 
 	} catch (error) {
-		initialized = false;
 
 		// Remove loading spinner
 		showPlayerText(':(')
@@ -84,7 +105,7 @@ async function fetchSources(movieData) {
 	apiURL.searchParams.set('sources', SOURCES);
 
 	// Send request to the API
-	const request = await fetch(apiURL, { method: 'GET', referrerPolicy: 'no-referrer' });
+	const request = await fetch(apiURL, { method: 'GET' });
 	if (!request.ok || request?.status !== 200) throw new Error(`Request failed with status ${request.status}`);
 
 	let playersData = await request.json();
@@ -100,7 +121,6 @@ async function fetchSources(movieData) {
  * @param {object[]} sourcesData
  */
 function setSources(sourcesData) {
-    sourcesElement.innerHTML = '';
 
 	// Get preferred source from local storage
 	const preferredSource = localStorage.getItem('preferred-source');
@@ -231,11 +251,6 @@ function showScriptErrorMessage() {
 	containerElement.appendChild(template);
 }
 
-function showPleaseWaitMessage() {
-    const template = document.getElementById('please-waite-message').content.cloneNode(true);
-	containerElement.appendChild(template);
-}
-
 /**
  * Show script outdated message
  * @param {string} scriptVersion The current script version
@@ -243,6 +258,14 @@ function showPleaseWaitMessage() {
 function showScriptOutdatedMessage(scriptVersion) {
 	const template = document.getElementById('script-outdated-message').content.cloneNode(true);
 	template.querySelector('.script-version').innerText = scriptVersion;
+	containerElement.appendChild(template);
+}
+
+/**
+ * Show server unavailable message. Used when the API is down.
+ */
+function showServerUnavailableMessage() {
+	const template = document.getElementById('server-unavailable-message').content.cloneNode(true);
 	containerElement.appendChild(template);
 }
 
@@ -288,19 +311,6 @@ function sendAnalytics(movieData) {
 function setup() {
 	try {
 		logger.info('Setup started');
-
-		// Show error if script not initialized after timeout
-		showPleaseWaitMessage();
-		setTimeout(() => {
-			if (initialized) return;
-			init(first_movie_data);
-			logger.info('Try init last from hist');
-		}, 5000);
-		setTimeout(() => {
-			if (initialized) return;
-			showScriptErrorMessage();
-			logger.error('Initialization timeout');
-		}, 10000);
 
 		// Get cached movie key from URL
 		const movieKey = getSearchParam('movie');
