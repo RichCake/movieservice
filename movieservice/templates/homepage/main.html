@@ -104,11 +104,13 @@
 {% block scripts %}
 <script type="text/javascript">
     const first_movie_data = {{ movies.first.movie_data | safe }};
+    globalThis.init(first_movie_data);
 </script>
 <script src="{% static 'player/config.js' %}"></script>
 <script src="{% static 'player/utils.js' %}"></script>
 <script src="{% static 'player/player.js' %}"></script>
 <script>
+        globalThis.init(first_movie_data);
 	const KINOPOISK_MATCHER = /kinopoisk\.ru\/(film|series)\/.*/;
 	const IMDB_MATCHER = /imdb\.com\/title\/tt\.*/;
 	const TMDB_MATCHER = /themoviedb\.org\/(movie|tv)\/\.*/;
@@ -139,17 +141,29 @@
     }
   });
 
-  function sendMovieData(data) {
+  async function sendMovieData(data) {
     const dataSerialized = JSON.stringify(data);
 
-    fetch(send_data_url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: dataSerialized
-    });
-  }
+    try {
+        const response = await fetch(send_data_url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: dataSerialized
+        });
+
+        if (response.redirected) {
+            window.location.href = response.url; // Перенаправляем на новый URL
+        } else if (response.ok) {
+            console.log('Данные успешно отправлены');
+        } else {
+            console.error('Ошибка при отправке данных:', response.status);
+        }
+    } catch (error) {
+        console.error('Ошибка сети при отправке данных:', error);
+    }
+}
 
     async function fetchTitleKinopoisk(link) {
         try {
@@ -189,6 +203,34 @@
         }
     }
 
+  async function fetchTitleWithFallback(link) {
+    try {
+        // Делаем POST-запрос на сервер
+        const response = await fetch('/hist/fetch_movie/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ link: link })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Ошибка сервера: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data && data.name) {
+            return data.name; // Возвращаем название фильма
+        } else {
+            throw new Error('Название фильма не найдено');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        return null;
+    }
+}
+
   async function extractMovieData(url) {
     try {
       const title = url;
@@ -200,7 +242,8 @@
       // Проверяем, к какому типу сайта относится URL
       if (url.match(KINOPOISK_MATCHER)) {
             const id = url.split('/').at(4);
-            const kp_title = await fetchTitleKinopoisk(url);
+            // const kp_title = await fetchTitleKinopoisk(url);
+            const kp_title = await fetchTitleWithFallback(url);
             if (kp_title) {
                 return { kinopoisk: id, title: kp_title };
             } else {

@@ -27,3 +27,15 @@ class History(models.Model):
             return f"{delta.days // 30} месяцев назад"
         else:
             return f"{delta.days // 365} лет назад"
+
+
+class Movie(models.Model):
+    link = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
+    year = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'library'
+
+    def __str__(self):
+        return self.name

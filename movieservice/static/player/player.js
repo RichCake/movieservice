@@ -121,7 +121,7 @@ async function fetchSources(movieData) {
  * @param {object[]} sourcesData
  */
 function setSources(sourcesData) {
-
+        sourcesElement.innerHTML = '';
 	// Get preferred source from local storage
 	const preferredSource = localStorage.getItem('preferred-source');
 	let preferredSourceIndex = sourcesData.findIndex((source) => source.source === preferredSource);
