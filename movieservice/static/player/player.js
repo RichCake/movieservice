@@ -344,4 +344,4 @@ document.body.classList.add('visible');
 globalThis.init = init;
 
 // Setup script
-document.addEventListener('DOMContentLoaded', setup);
+// document.addEventListener('DOMContentLoaded', setup);
