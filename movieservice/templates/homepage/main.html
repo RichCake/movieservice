@@ -104,7 +104,6 @@
 {% block scripts %}
 <script type="text/javascript">
     const first_movie_data = {{ movies.first.movie_data | safe }};
-    globalThis.init(first_movie_data);
 </script>
 <script src="{% static 'player/config.js' %}"></script>
 <script src="{% static 'player/utils.js' %}"></script>
@@ -127,7 +126,7 @@
       try {
         const movieData = await extractMovieData(url); // Ждём результата извлечения данных
         if (movieData) {
-          sendMovieData(movieData);
+          response = await sendMovieData(movieData);
           globalThis.init(movieData); // Передача данных в init
         } else {
           alert('Невозможно извлечь данные из указанного URL. Проверьте корректность ссылки.');

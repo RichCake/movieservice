@@ -1,5 +1,5 @@
 import json
-
+from django.db import transaction
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -93,8 +93,17 @@ def set_movie(request, id):
 @login_required
 def add_movie(request):
     if request.method == "POST":
-        post_data = json.loads(request.body)
-        History.objects.create(movie_data=post_data, user=request.user)
+        try:
+            # Проверяем корректность данных
+            post_data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+
+        # Создаём запись в истории
+        try:
+            History.objects.create(movie_data=post_data, user=request.user)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
 
     return redirect("homepage:home")
 
