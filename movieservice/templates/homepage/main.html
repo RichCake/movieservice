@@ -102,15 +102,13 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript">
-    const first_movie_data = {{ movies.first.movie_data | safe }};
-    globalThis.init(first_movie_data);
-</script>
 <script src="{% static 'player/config.js' %}"></script>
 <script src="{% static 'player/utils.js' %}"></script>
 <script src="{% static 'player/player.js' %}"></script>
 <script>
-        globalThis.init(first_movie_data);
+    const first_movie_data = {{ movies.first.movie_data | safe }};
+    globalThis.init(first_movie_data);
+    
 	const KINOPOISK_MATCHER = /kinopoisk\.ru\/(film|series)\/.*/;
 	const IMDB_MATCHER = /imdb\.com\/title\/tt\.*/;
 	const TMDB_MATCHER = /themoviedb\.org\/(movie|tv)\/\.*/;
